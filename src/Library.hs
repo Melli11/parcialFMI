@@ -43,10 +43,14 @@ darEmpresaAlFmi recursoNatural  = explotarRecurso recursoNatural .  cambiarLaDeu
 -- reducir 500 puestos de trabajo del sector público. Evitar la repetición de código.
 
 establecerBlindaje :: Estrategia
-establecerBlindaje unPais = prestarleNMillones (productoBrutoInterno unPais) $ cambiarSectorPublico (negate 500) unPais
+establecerBlindaje unPais = prestarleNMillones (0.5*productoBrutoInterno unPais) $ cambiarSectorPublico (negate 500) unPais
 
 productoBrutoInterno :: Pais -> Number
-productoBrutoInterno unPais = ingresoPerCapita unPais + sectorPrivado unPais + sectorPrivado unPais
+productoBrutoInterno unPais = ingresoPerCapita unPais * poblacionActiva unPais
+-- productoBrutoInterno' unPais= (ingresoPerCapita unPais * )  .  poblacionActiva 
+
+poblacionActiva :: Pais -> Number
+poblacionActiva unPais = sectorPrivado unPais + sectorPrivado unPais
 
 -- Dar un ejemplo de cómo generar al país Namibia, cuyo ingreso per cápita
 -- es de 4140 u$s, la población activa del sector público es de 400.000, la
@@ -97,10 +101,10 @@ type Receta = [Estrategia]
 recetaDeLaMuerte :: [Estrategia]
 recetaDeLaMuerte = [prestarleNMillones 200 ,darEmpresaAlFmi Mineria]
 
-castigarAlPais :: Pais -> Receta -> Pais
-castigarAlPais pais receta = foldl aplicarUnaRecetaDelFmi pais receta
+aplicarUnaReceta :: Pais -> Receta -> Pais
+aplicarUnaReceta pais receta = foldl aplicarUnaEstrategiaDelFmi pais receta
 
-aplicarUnaRecetaDelFmi unPais estrategia = estrategia unPais
+aplicarUnaEstrategiaDelFmi unPais estrategia = estrategia unPais
 
 -- 1b). Justificar cómo se logra el efecto colateral
 
@@ -121,8 +125,21 @@ totalDeDeuda  = sum.map deuda --ap parcial de la lista de paises, composición.
 -- c. Indicar en dónde apareció cada uno de los conceptos (solo una vez) y
 -- justificar qué ventaja tuvo para resolver el requerimiento.
 
--- Debe resolver este punto con recursividad: dado un país y una lista de
+-- 5. Debe resolver este punto con recursividad: dado un país y una lista de
 -- recetas, saber si la lista de recetas está ordenada de “peor” a “mejor”, en base al
 -- siguiente criterio: si aplicamos una a una cada receta, el PBI del país va de menor
 -- a mayor. Recordamos que el Producto Bruto Interno surge de multiplicar el
 -- ingreso per cápita por la población activa (privada y pública).
+
+-- estaOrdenadaDePeorAMayor unPais (x) = True
+-- estaOrdenadaDePeorAMayor unPais (x:y:xs) 
+--         | productoBrutoInterno $aplicarUnaReceta unPais x < productoBrutoInterno $aplicarUnaReceta unPais y = True
+--         | otherwise = False  
+
+-- aplicarUnaReceta :: Pais -> Receta -> Pais
+-- aplicarUnaReceta pais receta = foldl aplicarUnaEstrategiaDelFmi pais receta
+
+-- aplicarUnaEstrategiaDelFmi unPais estrategia = estrategia unPais
+
+-- productoBrutoInterno :: Pais -> Number
+-- productoBrutoInterno unPais = ingresoPerCapita unPais + sectorPrivado unPais + sectorPrivado unPais
