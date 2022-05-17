@@ -16,25 +16,25 @@ data Pais = Pais {
     deuda :: Number
 } deriving (Show,Eq)
 
-
--- RECETAS
+-- Implementar las estrategias que forman parte de las recetas del FMI.
+-- Estrategias/RECETAS
 
 -- prestarle n millones de dólares al país, esto provoca que el país se endeude en
 -- un 150% de lo que el FMI le presta (por los intereses)
 
-prestarleNMillones:: Number -> Pais -> Pais
+prestarleNMillones:: Number -> Estrategia
 prestarleNMillones cantidad  =  cambiarLaDeuda (cantidad*1.5)
 
 -- reducir x cantidad de puestos de trabajo del sector público, lo que provoca que
 -- se reduzca la cantidad de activos en el sector público y además que el ingreso
 -- per cápita disminuya en 20% si los puestos de trabajo son más de 100 ó 15% en
 -- -- -- caso contrario
-reducirSectorPublicoEn :: Number -> Pais -> Pais
+reducirSectorPublicoEn :: Number -> Estrategia
 reducirSectorPublicoEn cantidad unPais
     | sectorPublico unPais > 100 = cambiarSectorPublico (negate cantidad) $ cambiarIngresoPerCapital (negate (0.2 * ingresoPerCapita unPais)) unPais
-    | otherwise =  cambiarSectorPublico (negate cantidad) $ cambiarIngresoPerCapital(negate (0.15 * ingresoPerCapita unPais)) unPais 
+    | otherwise =  cambiarSectorPublico (negate cantidad) $ cambiarIngresoPerCapital(negate (0.15 * ingresoPerCapita unPais)) unPais
 
-darEmpresaAlFmi :: RecursoNatural -> Receta
+darEmpresaAlFmi :: RecursoNatural -> Estrategia
 darEmpresaAlFmi recursoNatural  = explotarRecurso recursoNatural .  cambiarLaDeuda (negate 20000000)
 
 -- establecer un “blindaje”, lo que provoca prestarle a dicho país la mitad de su
@@ -42,7 +42,7 @@ darEmpresaAlFmi recursoNatural  = explotarRecurso recursoNatural .  cambiarLaDeu
 -- por su población activa, sumando puestos públicos y privados de trabajo) y
 -- reducir 500 puestos de trabajo del sector público. Evitar la repetición de código.
 
-establecerBlindaje :: Pais -> Pais
+establecerBlindaje :: Estrategia
 establecerBlindaje unPais = prestarleNMillones (productoBrutoInterno unPais) $ cambiarSectorPublico (negate 500) unPais
 
 productoBrutoInterno :: Pais -> Number
@@ -68,16 +68,16 @@ brasil = Pais 4140 400 650000 [Ganaderia,Ecoturismo] 20000000
 
 -- Funciones Auxiliares
 
-type Receta = Pais -> Pais
-explotarRecurso :: RecursoNatural -> Receta
+type Estrategia = Pais -> Pais
+explotarRecurso :: RecursoNatural -> Estrategia
 explotarRecurso recursoNatural unPais = unPais { recursos = filter (recursoNatural/=) $recursos unPais  }
-cambiarLaDeuda :: Number -> Pais -> Pais
+cambiarLaDeuda :: Number -> Estrategia
 cambiarLaDeuda  cantidad unPais =  unPais { deuda = deuda unPais + cantidad }
 
-cambiarSectorPublico :: Number -> Pais -> Pais
+cambiarSectorPublico :: Number -> Estrategia
 cambiarSectorPublico cantidad unPais = unPais {sectorPublico = sectorPublico unPais + cantidad}
 
-cambiarIngresoPerCapital :: Number -> Pais -> Pais
+cambiarIngresoPerCapital :: Number -> Estrategia
 cambiarIngresoPerCapital cantidad unPais = unPais {ingresoPerCapita = ingresoPerCapita unPais + cantidad}
 
 
@@ -86,18 +86,38 @@ cambiarIngresoPerCapital cantidad unPais = unPais {ingresoPerCapita = ingresoPer
 argentina :: Pais
 argentina = Pais 5 10 10 [Mineria, Petroleo] 10000000
 
+listaDePaises :: [Pais]
 listaDePaises = [brasil,venezuela,bolivia,argentina,namibia]
+
+-- Modelar una receta que consista en prestar 200 millones, y darle a una
+-- empresa X la explotación de la “Minería” de un país.
+
+type Receta = [Estrategia]
+
+recetaDeLaMuerte :: [Estrategia]
+recetaDeLaMuerte = [prestarleNMillones 200 ,darEmpresaAlFmi Mineria]
+
+castigarAlPais :: Pais -> Receta -> Pais
+castigarAlPais pais receta = foldl aplicarUnaRecetaDelFmi pais receta
+
+aplicarUnaRecetaDelFmi unPais estrategia = estrategia unPais
+
+-- 1b). Justificar cómo se logra el efecto colateral
+
 -- a.Dada una lista de países conocer cuáles son los que pueden zafar,
 -- aquellos que tienen "Petróleo" entre sus riquezas naturales.
 
 puedenZafar :: [Pais] -> [Pais]
-puedenZafar paises = filter (\pais  -> elem Petroleo $ recursos pais ) paises
+puedenZafar paises = filter (elem Petroleo . recursos ) paises
 
 
 -- b. Dada una lista de países, saber el total de deuda que el FMI tiene a su
 -- favor.
 
-totalDeDeuda  = sum.map (deuda) 
+totalDeDeuda :: [Pais] -> Number
+totalDeDeuda  = sum.map deuda --ap parcial de la lista de paises, composición.
+
+
 -- c. Indicar en dónde apareció cada uno de los conceptos (solo una vez) y
 -- justificar qué ventaja tuvo para resolver el requerimiento.
 
