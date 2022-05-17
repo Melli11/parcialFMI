@@ -35,7 +35,7 @@ reducirSectorPublicoEn cantidad unPais
     | otherwise =  cambiarSectorPublico (negate cantidad) $ cambiarIngresoPerCapital(negate (0.15 * ingresoPerCapita unPais)) unPais
 
 darEmpresaAlFmi :: RecursoNatural -> Estrategia
-darEmpresaAlFmi recursoNatural  = explotarRecurso recursoNatural .  cambiarLaDeuda (negate 20000000)
+darEmpresaAlFmi recursoNatural  = explotarRecurso recursoNatural .  cambiarLaDeuda (negate 2000000)
 
 -- establecer un “blindaje”, lo que provoca prestarle a dicho país la mitad de su
 -- Producto Bruto Interno (que se calcula como el ingreso per cápita multiplicado
