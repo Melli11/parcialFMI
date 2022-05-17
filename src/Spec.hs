@@ -8,7 +8,7 @@ import Test.Hspec
 correrTests :: IO ()
 correrTests = hspec $ do
   suiteDeTestsDeParte1
-  -- suiteDeTestsDeParte2
+  suiteDeTestsDeParte2
 
 suiteDeTestsDeParte1 = describe  "Punto 2: Estrategias FMI" $ do
   describe "Prestarle n Millones a un Pais" $ do
@@ -29,7 +29,16 @@ suiteDeTestsDeParte1 = describe  "Punto 2: Estrategias FMI" $ do
        establecerBlindaje (Pais 10 5 5 [Petroleo] 0)  `shouldBe` (Pais 10 (-495) 5 [Petroleo] 75)  
     it "El PBI del el pais X: se calcula como el ingreso per cápita multiplicado por su población activa, sumando puestos públicos y privados de trabajo" $ do
        productoBrutoInterno (Pais 10 5 5 [Petroleo] 0)  `shouldBe` 100
-    it "La poblacion activa de un  pais X: sumando puestos públicos y privados de trabajo" $ do
+    it "La poblacion activa de un pais X se calcula sumando puestos públicos y privados de trabajo" $ do
        poblacionActiva (Pais 0 5 5 [Petroleo] 0)  `shouldBe` 10
+
+suiteDeTestsDeParte2 = describe  "Punto 2: Orden Superior" $ do
+  let listadoDePaisesQuePuedenSafar = [Pais {ingresoPerCapita = 4140, sectorPublico = 400, sectorPrivado = 650000, recursos = [Petroleo,Ecoturismo], deuda = 30000000},Pais {ingresoPerCapita = 4140, sectorPublico = 400, sectorPrivado = 650000, recursos = [Petroleo,Ecoturismo], deuda = 40000000},Pais {ingresoPerCapita = 5, sectorPublico = 10, sectorPrivado = 10, recursos = [Mineria,Petroleo], deuda = 10000000}]
+  describe "Paises que pueden Safar" $ do
+    it "Dada una lista de paises pueden zafar los que tienen Petroleo entre sus riquezas naturales" $ do
+       puedenZafar [brasil,venezuela,bolivia,argentina,namibia] `shouldBe` listadoDePaisesQuePuedenSafar 
+  describe "Total de deuda" $ do
+     it "El total de la Deuda de un conjunto de paises , es saldo a favor del FMI" $ do
+       totalDeDeuda  listaDePaises `shouldBe` 150000000
        
     

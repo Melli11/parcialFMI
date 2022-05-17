@@ -93,7 +93,7 @@ argentina = Pais 5 10 10 [Mineria, Petroleo] 10000000
 listaDePaises :: [Pais]
 listaDePaises = [brasil,venezuela,bolivia,argentina,namibia]
 
--- Modelar una receta que consista en prestar 200 millones, y darle a una
+-- 3a Modelar una receta que consista en prestar 200 millones, y darle a una
 -- empresa X la explotación de la “Minería” de un país.
 
 type Receta = [Estrategia]
@@ -104,7 +104,24 @@ recetaDeLaMuerte = [prestarleNMillones 200 ,darEmpresaAlFmi Mineria]
 aplicarUnaReceta :: Pais -> Receta -> Pais
 aplicarUnaReceta pais receta = foldl aplicarUnaEstrategiaDelFmi pais receta
 
+-- aplicarReceta receta pais = foldr ($) pais receta
+-- aplicarReceta receta pais = foldl (\pais estrategia -> estrategia pais) pais receta
 aplicarUnaEstrategiaDelFmi unPais estrategia = estrategia unPais
+
+-- 3b Ahora queremos aplicar la receta del punto 3.a al país Namibia (creado en
+-- el punto 1.b). Justificar cómo se logra el efecto colateral
+
+-- tiene efecto colateral, efecto de lado o efecto secundario si esta, además de retornar un valor, modifica el estado de su entorno.
+
+-- Si consulto por consola: 
+-- Spec Library Spec> namibia
+-- Pais {ingresoPerCapita = 4140, sectorPublico = 400, sectorPrivado = 650000, recursos = [Mineria,Ecoturismo], deuda = 50000000}
+
+-- Y luego aplico la receta de la muerta a namibia obtengo:
+-- Spec Library Spec> aplicarUnaReceta namibia recetaDeLaMuerte
+-- Pais {ingresoPerCapita = 4140, sectorPublico = 400, sectorPrivado = 650000, recursos = [Ecoturismo], deuda = 48000300}
+
+
 
 -- 1b). Justificar cómo se logra el efecto colateral
 
