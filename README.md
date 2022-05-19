@@ -2,7 +2,9 @@
 
 **FMI (Funcional Mata Imperativo)**
 
-**Temas a evaluar: ![](Aspose.Words.8e6c8111-c67d-4382-97b4-c000a8aa76ce.001.png)**
+![Aspose Words 8e6c8111-c67d-4382-97b4-c000a8aa76ce 001](https://user-images.githubusercontent.com/54424951/169203072-a52a9cf1-7a60-4ddd-a656-63898ef57f59.png)
+
+**Temas a evaluar:**
 
 - Composición 
 - Aplicación parcial 
