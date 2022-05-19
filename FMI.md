@@ -1,6 +1,4 @@
-# Parcial FMI
-
-**FMI (Funcional Mata Imperativo)**
+﻿**FMI (Funcional Mata Imperativo)**
 
 **Temas a evaluar: ![](Aspose.Words.8e6c8111-c67d-4382-97b4-c000a8aa76ce.001.png)**
 
@@ -27,36 +25,25 @@ El FMI es especialista en dar recetas. Cada receta combina una o más estrategia
 Se pide implementar en Haskell los siguientes requerimientos explicitando el tipo de cada función:
 
 1. *(2 puntos)*
-   
-   1. Representar el TAD País.
-   2. Dar un ejemplo de cómo generar al país Namibia, cuyo ingreso per cápita es de 4140 u$$, la población activa del sector público es de 400.000, la población activa del sector privado es de 650.000, su riqueza es la minería y el ecoturismo y le debe 50 (millones de u$$) al FMI.
-   
+1. Representar el TAD País.
+1. Dar un ejemplo de cómo generar al país Namibia, cuyo ingreso per cápita es de 4140 u$s, la población activa del sector público es de 400.000, la población activa del sector privado es de 650.000, su riqueza es la minería y el ecoturismo y le debe 50 (millones de u$s) al FMI.
 2. *(4 puntos)* Implementar las estrategias que forman parte de las recetas del FMI.
-   
-3. *(2 puntos)*
-   1. Modelar una receta que consista en prestar 200 millones, y darle a una empresa X la explotación de la “Minería” de un país.
-   2. Ahora queremos aplicar la receta del punto 3.a al país Namibia (creado en el punto 1.b). Justificar cómo se logra el efecto colateral.
-   
+2. *(2 puntos)*
+1. Modelar una receta que consista en prestar 200 millones, y darle a una empresa X la explotación de la “Minería” de un país.
+1. Ahora queremos aplicar la receta del punto 3.a al país Namibia (creado en el punto 1.b). Justificar cómo se logra el efecto colateral.
 4. *(3 puntos) Resolver todo el punto con orden superior, composición y aplicación parcial*, no puede utilizar funciones auxiliares.
-   
-   1. Dada una lista de países conocer cuáles son los que pueden zafar, aquellos que tienen "Petróleo" entre sus riquezas naturales.
-   
-   2. Dada una lista de países, saber el total de deuda que el FMI tiene a su favor.
-   
-   3.  Indicar en dónde apareció cada uno de los conceptos (solo una vez) y justificar qué ventaja tuvo para resolver el requerimiento.
-   
-5.  *(2 puntos) Debe resolver este punto con recursividad*: dado un país y una lista de recetas, saber si la lista de recetas está ordenada de “peor” a “mejor”, en base al siguiente criterio: si aplicamos una a una cada receta, el PBI del país va de menor a mayor. Recordamos que el Producto Bruto Interno surge de multiplicar el ingreso per cápita por la población activa (privada y pública).
-   
-6.  *(1 punto)* Si un país tiene infinitos recursos naturales, modelado con esta función 
+1. Dada una lista de países conocer cuáles son los que pueden zafar, aquellos que tienen "Petróleo" entre sus riquezas naturales.
+1. Dada una lista de países, saber el total de deuda que el FMI tiene a su favor.
+1. Indicar en dónde apareció cada uno de los conceptos (solo una vez) y justificar qué ventaja tuvo para resolver el requerimiento.
+5. *(2 puntos) Debe resolver este punto con recursividad*: dado un país y una lista de recetas, saber si la lista de recetas está ordenada de “peor” a “mejor”, en base al siguiente criterio: si aplicamos una a una cada receta, el PBI del país va de menor a mayor. Recordamos que el Producto Bruto Interno surge de multiplicar el ingreso per cápita por la población activa (privada y pública).
+5. *(1 punto)* Si un país tiene infinitos recursos naturales, modelado con esta función recursosNaturalesInfinitos :: [String]
 
-    **recursosNaturalesInfinitos :: [String]**
+recursosNaturalesInfinitos = "Energia" : recursosNaturalesInfinitos
 
-    **recursosNaturalesInfinitos = "Energia" : recursosNaturalesInfinitos**
-
-    1. ¿qué sucede evaluamos la función 4a con ese país?
-    2. ¿y con la 4b?
+1. ¿qué sucede evaluamos la función 4a con ese país?
+1. ¿y con la 4b?
 
 Justifique ambos puntos relacionándolos con algún concepto.
 
-**Recordatorio:** Solo puede utilizar recursividad en el punto 5.b. 
-
+**Recordatorio:** Solo puede utilizar recursividad en el punto 5.b. Cualquier otra ![](Aspose.Words.8e6c8111-c67d-4382-97b4-c000a8aa76ce.002.png)solución donde quiera aplicar recursividad no será tomada en cuenta.
+2 de 2
