@@ -58,7 +58,7 @@ poblacionActiva unPais = sectorPrivado unPais + sectorPrivado unPais
 -- y el ecoturismo y le debe 50 (millones de u$s) al FMI.
 
 namibia :: Pais
-namibia = Pais 4140 400 650000 [Mineria,Ecoturismo] 50000000
+namibia = Pais 4140 400000 650000 [Mineria,Ecoturismo] 50000000
 
 bolivia :: Pais
 bolivia = Pais 4140 400 650000 [Petroleo,Ecoturismo] 40000000
